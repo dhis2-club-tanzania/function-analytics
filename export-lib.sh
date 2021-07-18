@@ -1,1 +1,0 @@
-echo "import {Fn} from './function-analytics.min';\nexport {Fn};" > lib/index.js
