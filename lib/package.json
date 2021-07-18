@@ -1,0 +1,14 @@
+{
+  "name": "typescript-library",
+  "version": "1.0.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rajey/typescript-library-starter.git"
+  },
+  "author": "Rajab Mkomwa",
+  "license": "LGPL-3.0",
+  "bugs": {
+    "url": "https://github.com/rajey/typescript-library-starter/issues"
+  },
+  "homepage": "https://github.com/rajey/typescript-library-starter#readme"
+}
