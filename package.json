@@ -5,7 +5,7 @@
   "main": "lib/function-analytics.js",
   "scripts": {
     "build": "npm run test && webpack --env dev && webpack --env build --fix && sh export-lib.sh",
-    "build:offline": "webpack --env dev && webpack --env build --fix && sh export-lib.sh && npm run docs && cd lib/ && npm pack",
+    "build:offline": "webpack --env dev && webpack --env build --fix && sh export-lib.sh && cd lib/ && npm pack",
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "mocha --require babel-register --colors test/**/**/*.spec.js",
     "test:watch": "mocha --require babel-register --colors -w ./test/*.spec.js",

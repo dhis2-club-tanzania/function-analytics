@@ -12,7 +12,8 @@ let lib;
 describe('Given an instance of Analytics library', () => {
   before(() => {
     lib = new Fn.Analytics();
-    lib.setData('dx1')
+    lib
+      .setData('dx1')
       .setPeriod('pe1')
       .setOrgUnit('ou1')
       .setParameters({
@@ -28,7 +29,6 @@ describe('Given an instance of Analytics library', () => {
     expect(url.indexOf('displayProperty=SHORTNAME') > -1).to.be.equal(true);
     expect(url.indexOf('&') > -1).to.be.equal(true);
   });
-
 });
 
 let analyticsObject;
@@ -93,12 +93,10 @@ describe('When I get the analytics object', () => {
           pe: { name: 'Period' },
           m0frOspS7JY: { name: 'MOH - Tanzania' },
           'BJpjOFTE4By.TrmsDE6SUZI': {
-            name:
-              'Artemether / Lumefantrine Oral (ALU) - Stockout > 4 weeks'
+            name: 'Artemether / Lumefantrine Oral (ALU) - Stockout > 4 weeks'
           },
           'BJpjOFTE4By.BQrHxULahIt': {
-            name:
-              'Artemether / Lumefantrine Oral (ALU) - Stockout 1-4 weeks'
+            name: 'Artemether / Lumefantrine Oral (ALU) - Stockout 1-4 weeks'
           }
         },
         dimensions: {
@@ -152,7 +150,7 @@ describe('When I get the analytics object', () => {
   it('should return standardized analytics from new analytics', () => {
     let analytics = new Fn.Analytics();
 
-    let results = analytics.standardizeAnalytics(analyticsObject)
+    let results = analytics.standardizeAnalytics(analyticsObject);
     expect(results.headers !== undefined).to.be.equal(true);
     expect(results.rows !== undefined).to.be.equal(true);
     expect(results.metaData.ouHierarchy !== undefined).to.be.equal(true);
@@ -164,7 +162,9 @@ describe('When I get the analytics object', () => {
   it('should return valid analytics object', () => {
     expect(analyticsObject.headers !== undefined).to.be.equal(true);
     expect(analyticsObject.rows !== undefined).to.be.equal(true);
-    expect(analyticsObject.metaData.ouHierarchy !== undefined).to.be.equal(true);
+    expect(analyticsObject.metaData.ouHierarchy !== undefined).to.be.equal(
+      true
+    );
     expect(analyticsObject.metaData !== undefined).to.be.equal(true);
     expect(analyticsObject.height !== undefined).to.be.equal(true);
     expect(analyticsObject.width !== undefined).to.be.equal(true);
@@ -197,7 +197,48 @@ describe('When I get the analytics object', () => {
   });*/
 
   it('should return valid new metadata with new structure', () => {
-    var analyticsData = {"metaData": {"items": {"201808": {"name": "August 2018"}, "201807": {"name": "July 2018"}, "201809": {"name": "September 2018"}, "201804": {"name": "April 2018"}, "201903": {"name": "March 2019"}, "201902": {"name": "February 2019"}, "201806": {"name": "June 2018"}, "lgZ6HfZaj3f": {"name": "Arusha City Council"}, "ou": {"name": "Organisation unit"}, "201805": {"name": "May 2018"}, "201811": {"name": "November 2018"}, "201810": {"name": "October 2018"}, "201901": {"name": "January 2019"}, "201812": {"name": "December 2018"}, "pe": {"name": "Period"}}, "dimensions": {"pe": ["201804", "201805", "201806", "201807", "201808", "201809", "201810", "201811", "201812", "201901", "201902", "201903"], "ou": ["lgZ6HfZaj3f"], "co": []}}, "rows": [], "height": 0, "width": 0};
+    var analyticsData = {
+      metaData: {
+        items: {
+          '201808': { name: 'August 2018' },
+          '201807': { name: 'July 2018' },
+          '201809': { name: 'September 2018' },
+          '201804': { name: 'April 2018' },
+          '201903': { name: 'March 2019' },
+          '201902': { name: 'February 2019' },
+          '201806': { name: 'June 2018' },
+          lgZ6HfZaj3f: { name: 'Arusha City Council' },
+          ou: { name: 'Organisation unit' },
+          '201805': { name: 'May 2018' },
+          '201811': { name: 'November 2018' },
+          '201810': { name: 'October 2018' },
+          '201901': { name: 'January 2019' },
+          '201812': { name: 'December 2018' },
+          pe: { name: 'Period' }
+        },
+        dimensions: {
+          pe: [
+            '201804',
+            '201805',
+            '201806',
+            '201807',
+            '201808',
+            '201809',
+            '201810',
+            '201811',
+            '201812',
+            '201901',
+            '201902',
+            '201903'
+          ],
+          ou: ['lgZ6HfZaj3f'],
+          co: []
+        }
+      },
+      rows: [],
+      height: 0,
+      width: 0
+    };
     var analytics = new Fn.Analytics();
     var standardizedAnalytics = analytics.standardizeAnalytics(
       analyticsData,
@@ -206,7 +247,9 @@ describe('When I get the analytics object', () => {
     expect(standardizedAnalytics.headers.length).to.be.equal(0);
     expect(standardizedAnalytics.metaData.dimensions.pe.length).to.be.equal(12);
     expect(standardizedAnalytics.metaData.dimensions.ou.length).to.be.equal(1);
-    expect(standardizedAnalytics.metaData.items.ou.name).to.be.equal('Organisation unit');
+    expect(standardizedAnalytics.metaData.items.ou.name).to.be.equal(
+      'Organisation unit'
+    );
     expect(standardizedAnalytics.metaData.items.pe.name).to.be.equal('Period');
 
     expect(standardizedAnalytics.metaData.ou === undefined).to.be.equal(true);
@@ -284,12 +327,10 @@ describe('Given an instance of Analytics library', () => {
           pe: { name: 'Period' },
           m0frOspS7JY: { name: 'MOH - Tanzania' },
           'BJpjOFTE4By.TrmsDE6SUZI': {
-            name:
-              'Artemether / Lumefantrine Oral (ALU) - Stockout > 4 weeks'
+            name: 'Artemether / Lumefantrine Oral (ALU) - Stockout > 4 weeks'
           },
           'BJpjOFTE4By.BQrHxULahIt': {
-            name:
-              'Artemether / Lumefantrine Oral (ALU) - Stockout 1-4 weeks'
+            name: 'Artemether / Lumefantrine Oral (ALU) - Stockout 1-4 weeks'
           }
         },
         dimensions: {
@@ -316,9 +357,7 @@ describe('Given an instance of Analytics library', () => {
           co: []
         }
       },
-      rows: [
-        ['BJpjOFTE4By.BQrHxULahIt', '201803', 'm0frOspS7JY', '64.0']
-      ],
+      rows: [['BJpjOFTE4By.BQrHxULahIt', '201803', 'm0frOspS7JY', '64.0']],
       height: 18,
       width: 4
     });
@@ -343,51 +382,71 @@ describe('Given an instance of Analytics library', () => {
     expect(analyticsResult.rows[0].value).to.be.equal('64.0');
   });
 });
-/*
+
 describe('Given an instance of Analytics library', () => {
-  it('should return merged analytics', () => {
-    let analytics1 = new Fn.Analytics();
-    lib.setData('dx1')
+  it('should return analytics object', () => {
+    new Fn.Analytics()
+      .setData('fbfJHSPpUQD')
       .setPeriod('201901')
-      .setOrgUnit('ou1')
+      .setOrgUnit('ImspTQPwCqd')
       .setParameters({
         displayProperty: 'SHORTNAME'
-      });
-    let analytics2 = new Fn.Analytics();
-    lib.setData('dx2')
-      .setPeriod('201901')
-      .setOrgUnit('ou2')
-      .setParameters({
-        displayProperty: 'SHORTNAME'
-      });
-    let results = analytics2.merge([analytics1]);
-    expect(results.length).to.be.equal(1);
-    expect(results[0].url.indexOf('dimension=pe:201901') > -1).to.be.equal(true);
-    expect(results[0].url.indexOf('dimension=dx:dx1;dx2') > -1).to.be.equal(true);
-    expect(results[0].url.indexOf('dimension=dx:ou1;ou2') > -1).to.be.equal(true);
+      })
+      .get()
+      .then(
+        res => {
+          expect(res).to.be.a('Object');
+        },
+        err => {
+          expect(err.status).to.equal(404);
+        }
+      );
   });
-
-  it('should return unmerged analytics consideration', () => {
-    let analytics1 = new Fn.Analytics();
-    lib.setData('dx1')
-      .setPeriod('201901')
-      .setOrgUnit('ou1')
-      .setParameters({
-        displayProperty: 'SHORTNAME'
-      });
-    let analytics2 = new Fn.Analytics();
-    lib.setData('dx2')
-      .setPeriod('201901')
-      .setOrgUnit('LEVEL-4;ou2')
-      .setParameters({
-        displayProperty: 'SHORTNAME'
-      });
-    let results = analytics2.merge([analytics1]);
-    expect(results.length).to.be.equal(2);
-    expect(results[0].url.indexOf('dimension=pe:201901') > -1).to.be.equal(true);
-    expect(results[0].url.indexOf('dimension=dx:dx1;dx2') > -1).to.be.equal(true);
-    expect(results[0].url.indexOf('dimension=dx:ou1;ou2') > -1).to.be.equal(true);
-  });
-
 });
-*/
+
+// describe('Given an instance of Analytics library', () => {
+//   it('should return merged analytics', () => {
+//     let analytics1 = new Fn.Analytics();
+//     lib.setData('dx1')
+//       .setPeriod('201901')
+//       .setOrgUnit('ou1')
+//       .setParameters({
+//         displayProperty: 'SHORTNAME'
+//       });
+//     let analytics2 = new Fn.Analytics();
+//     lib.setData('dx2')
+//       .setPeriod('201901')
+//       .setOrgUnit('ou2')
+//       .setParameters({
+//         displayProperty: 'SHORTNAME'
+//       });
+//     let results = analytics2.merge([analytics1]);
+//     expect(results.length).to.be.equal(1);
+//     expect(results[0].url.indexOf('dimension=pe:201901') > -1).to.be.equal(true);
+//     expect(results[0].url.indexOf('dimension=dx:dx1;dx2') > -1).to.be.equal(true);
+//     expect(results[0].url.indexOf('dimension=dx:ou1;ou2') > -1).to.be.equal(true);
+//   });
+
+//   it('should return unmerged analytics consideration', () => {
+//     let analytics1 = new Fn.Analytics();
+//     lib.setData('dx1')
+//       .setPeriod('201901')
+//       .setOrgUnit('ou1')
+//       .setParameters({
+//         displayProperty: 'SHORTNAME'
+//       });
+//     let analytics2 = new Fn.Analytics();
+//     lib.setData('dx2')
+//       .setPeriod('201901')
+//       .setOrgUnit('LEVEL-4;ou2')
+//       .setParameters({
+//         displayProperty: 'SHORTNAME'
+//       });
+//     let results = analytics2.merge([analytics1]);
+//     expect(results.length).to.be.equal(2);
+//     expect(results[0].url.indexOf('dimension=pe:201901') > -1).to.be.equal(true);
+//     expect(results[0].url.indexOf('dimension=dx:dx1;dx2') > -1).to.be.equal(true);
+//     expect(results[0].url.indexOf('dimension=dx:ou1;ou2') > -1).to.be.equal(true);
+//   });
+
+// });

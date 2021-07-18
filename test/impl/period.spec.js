@@ -79,7 +79,6 @@ describe('Given I set quarterly period type', () => {
       })
       .get();
     periodResult = period.list();
-    console.log(JSON.stringify(periodResult));
   });
 
   it('should return quarterly period list for the current year', () => {
@@ -103,21 +102,22 @@ describe('Given I set bi monthly period type', () => {
   });
 });
 
-// describe('Given I set six monthly period type', () => {
-//   let periodResult;
+describe('Given I set six monthly period type', () => {
+  let periodResult;
 
-//   before(() => {
-//     period
-//       .setType('SixMonthly')
-//       .setYear(period.currentYear())
-//       .get();
-//     periodResult = period.list();
-//   });
+  before(() => {
+    period
+      .setType('SixMonthly')
+      .setYear(period.currentYear())
+      .get();
+    periodResult = period.list();
+    console.log(JSON.stringify(periodResult));
+  });
 
-//   it('should return six monthly period list for the current year', () => {
-//     expect(periodResult.length > 0).to.be.equal(true);
-//   });
-// });
+  it('should return six monthly period list for the current year', () => {
+    expect(periodResult.length > 0).to.be.equal(true);
+  });
+});
 
 describe('Given I set six monthly april period type', () => {
   let periodResult;

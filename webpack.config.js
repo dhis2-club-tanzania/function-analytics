@@ -1,6 +1,5 @@
 /* global __dirname, require, module*/
 
-const webpack = require('webpack');
 const path = require('path');
 const env = require('yargs').argv.env; // use --env with webpack 2
 const pkg = require('./package.json');
@@ -20,7 +19,7 @@ if (env === 'build') {
 }
 
 const config = {
-  mode: mode,
+  mode,
   entry: __dirname + '/src/index.js',
   devtool: 'inline-source-map',
   output: {
@@ -39,6 +38,14 @@ const config = {
       { from: 'LICENSE', to: '' }
     ])
   ],
+  externals: {
+    lodash: {
+      commonjs: 'lodash',
+      commonjs2: 'lodash',
+      amd: 'lodash',
+      root: '_'
+    }
+  },
   module: {
     rules: [
       {

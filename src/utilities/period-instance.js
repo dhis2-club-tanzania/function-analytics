@@ -668,6 +668,7 @@ export class PeriodInstance {
         break;
       }
 
+      // TODO Have a common method to handle children generation for combined periods
       case 'Quarterly': {
         const year = parseInt(parentId.slice(0, 4), 10);
 
@@ -700,6 +701,65 @@ export class PeriodInstance {
 
         break;
       }
+
+      case 'BiMonthly': {
+        const year = parseInt(parentId.slice(0, 4), 10);
+
+        if (!isNaN(year)) {
+          switch (childrenType) {
+            case 'Monthly': {
+              const biMonthlyNumber = parseInt(parentId.slice(4), 10);
+
+              const monthPeriods = this.getPeriods(childrenType, year, 0);
+
+              periods = (monthPeriods || [])
+                .filter(({}, periodIndex) => {
+                  const max = biMonthlyNumber * 2;
+                  const min = max - 2;
+
+                  return periodIndex >= min && periodIndex < max;
+                })
+                .reverse();
+              break;
+            }
+
+            default:
+              break;
+          }
+        }
+
+        break;
+      }
+
+      case 'SixMonthly': {
+        const year = parseInt(parentId.slice(0, 4), 10);
+
+        if (!isNaN(year)) {
+          switch (childrenType) {
+            case 'Monthly': {
+              const sixMonthlyNumber = parseInt(parentId.slice(-1), 10);
+
+              const monthPeriods = this.getPeriods(childrenType, year, 0);
+
+              periods = (monthPeriods || [])
+                .filter(({}, periodIndex) => {
+                  const max = sixMonthlyNumber * 6;
+                  const min = max - 6;
+
+                  return periodIndex >= min && periodIndex < max;
+                })
+                .reverse();
+              break;
+            }
+
+            default:
+              break;
+          }
+        }
+
+        break;
+      }
+
       default:
         break;
     }

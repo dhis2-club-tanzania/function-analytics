@@ -2,7 +2,6 @@ import { Analytics } from './model/analytics.js';
 import { AnalyticsResult } from './result/analytics-result';
 import { EventAnalytics } from './model/event-analytics';
 import { SQLViewData } from './model/sql-view.js';
-import { ProgressPromise } from './utilities/progress-promise';
 import { Runner } from './utilities/runner.js';
 import { Dependency } from './utilities/dependency';
 import { MultiFetcher } from './utilities/multi-fetcher';
@@ -21,7 +20,6 @@ import { PeriodType } from './model/period-type';
  * }
  */
 let Fn = {
-  Promise: ProgressPromise,
   Analytics: Analytics,
   EventAnalytics: EventAnalytics,
   AnalyticsResult: AnalyticsResult,

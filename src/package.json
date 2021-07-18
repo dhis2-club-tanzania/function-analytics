@@ -1,6 +1,6 @@
 {
   "name": "@iapps/function-analytics",
-  "version": "1.0.0-beta.19",
+  "version": "1.0.0-beta.21",
   "description": "Produce universal library with webpack and es6",
   "main": "lib/function-analytics.js",
   "scripts": {},

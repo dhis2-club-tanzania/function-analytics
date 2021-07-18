@@ -1,7 +1,7 @@
-import ProgressPromise from 'progress-promise';
 import axios from 'axios';
 import httpadapter from 'axios/lib/adapters/http';
 import xhradapter from 'axios/lib/adapters/xhr';
+// import { ProgressPromise } from './progress-promise';
 let _instance;
 
 /**
@@ -68,7 +68,7 @@ export class Runner {
   _fetch(fetcher, resolve, reject) {
     if (!_instance) {
       let error =
-        'Configration not set please configre function ' +
+        'Configuration not set please configure function ' +
         'analytics eg {baseUrl:"dhis_base_url", username:"username", ' +
         'password:"password"}';
 
@@ -96,9 +96,17 @@ export class Runner {
       axios.request(config).then(
         results => {
           _instance.cache[hashed].data = results.data;
-          resolve(fetcher.performPostProcess(JSON.parse(JSON.stringify(_instance.cache[hashed].data))));
-          _instance.cache[hashed].resolutions.forEach(function (resolution) {
-            resolution(fetcher.performPostProcess(JSON.parse(JSON.stringify(_instance.cache[hashed].data))));
+          resolve(
+            fetcher.performPostProcess(
+              JSON.parse(JSON.stringify(_instance.cache[hashed].data))
+            )
+          );
+          _instance.cache[hashed].resolutions.forEach(resolution => {
+            resolution(
+              fetcher.performPostProcess(
+                JSON.parse(JSON.stringify(_instance.cache[hashed].data))
+              )
+            );
           });
           _instance.cache[hashed].finished = true;
         },
@@ -110,7 +118,11 @@ export class Runner {
       if (!_instance.cache[hashed].finished) {
         _instance.cache[hashed].resolutions.push(resolve);
       } else {
-        resolve(fetcher.performPostProcess(JSON.parse(JSON.stringify(_instance.cache[hashed].data))));
+        resolve(
+          fetcher.performPostProcess(
+            JSON.parse(JSON.stringify(_instance.cache[hashed].data))
+          )
+        );
       }
     }
   }
@@ -125,60 +137,36 @@ export class Runner {
       // If is a multifetcher
       return this.getAllResults(fetcher);
     }
-    // let hashed = fetcher.hash();
-
-    // if (!_instance.cache[hashed]) {
-    //   _instance.cache[hashed] = new ProgressPromise(
-    //     (resolve, reject, progress) => {
-    //       if (fetcher.hasDependencies()) {
-    //         fetcher
-    //           .getDependecyFetchResults()
-    //           .then(() => {
-    //             fetcher.performPreProcess();
-    //             this._fetch(fetcher, resolve, reject);
-    //           })
-    //           .catch(err => {
-    //             console.log('Errrrrrrrrrr:', err);
-    //             reject();
-    //           });
-    //       } else {
-    //         this._fetch(fetcher, resolve, reject);
-    //       }
-    //     }
-    //   );
-    // }
-    return new ProgressPromise(
-      (resolve, reject, progress) => {
-        if (fetcher.hasDependencies()) {
-          fetcher
-            .getDependecyFetchResults()
-            .then(() => {
-              fetcher.performPreProcess();
-              this._fetch(fetcher, resolve, reject);
-            })
-            .catch(err => {
-              console.log('Errrrrrrrrrr:', err);
-              reject();
-            });
-        } else {
-          this._fetch(fetcher, resolve, reject);
-        }
+    return new Promise((resolve, reject) => {
+      if (fetcher.hasDependencies()) {
+        fetcher
+          .getDependecyFetchResults()
+          .then(() => {
+            fetcher.performPreProcess();
+            this._fetch(fetcher, resolve, reject);
+          })
+          .catch(err => {
+            console.log(err);
+            reject();
+          });
+      } else {
+        this._fetch(fetcher, resolve, reject);
       }
-    );
+    });
   }
 
   /**
    * Fetches data for multiple fetchers
    * @param {MultiFetcher} multifetcher
-   * @returns {ProgressPromise}
+   * @returns {Promise}
    */
   getAllResults(multifetcher) {
-    return new ProgressPromise((resolve, reject, progress) => {
+    return new Promise((resolve, reject) => {
       const promises = multifetcher.fetchers.map(fetcher =>
         new Runner().getResults(fetcher)
       );
 
-      return ProgressPromise.all(promises)
+      return Promise.all(promises)
         .then(results => {
           resolve(multifetcher.performPostProcess(results));
         })
