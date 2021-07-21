@@ -81,8 +81,6 @@ export class Runner {
         url: fetcher.url,
       });
 
-      console.log("INNER CONFIGURATION", config);
-
       fetch(config.url, config.fetchConfig).then(
         async (results) => {
           this.cache[hashed].data = await results.json();
