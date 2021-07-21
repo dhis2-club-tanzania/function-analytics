@@ -1,12 +1,9 @@
 {
   "name": "@iapps/function-analytics",
   "version": "1.0.0-beta.20",
-  "description": "Produce universal library with webpack and es6",
-  "main": "lib/function-analytics.js",
-  "scripts": {},
   "repository": {
     "type": "git",
-    "url": "https://github.com/hisptz/function-analytics.git"
+    "url": "git+https://github.com/dhis2-club-tanzania/function-analytics.git"
   },
   "keywords": [
     "webpack",
@@ -17,14 +14,18 @@
     "umd",
     "commonjs"
   ],
-  "author": "HISP Tanzania",
+  "author": "Rajab Mkomwa",
   "license": "LGPL-3.0",
   "bugs": {
-    "url": "https://github.com/hisptz/function-analytics/issues"
+    "url": "https://github.com/dhis2-club-tanzania/function-analytics/issues"
   },
-  "homepage": "https://github.com/hisptz/function-analytics",
+  "homepage": "https://github.com/dhis2-club-tanzania/function-analytics#readme",
   "dependencies": {
-    "axios": "^0.19.0",
-    "progress-promise": "0.0.6"
+    "@types/base-64": "^1.0.0",
+    "@types/node-fetch": "^2.5.11",
+    "base-64": "^1.0.0",
+    "lodash": "^4.17.15",
+    "node-fetch": "^2.6.1",
+    "progress-promise": "^0.0.6"
   }
 }
