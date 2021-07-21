@@ -1,14 +1,31 @@
 {
-  "name": "typescript-library",
-  "version": "1.0.0",
+  "name": "@iapps/function-analytics",
+  "version": "1.0.0-beta.22",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rajey/typescript-library-starter.git"
+    "url": "git+https://github.com/dhis2-club-tanzania/function-analytics.git"
   },
+  "keywords": [
+    "webpack",
+    "es6",
+    "starter",
+    "library",
+    "universal",
+    "umd",
+    "commonjs"
+  ],
   "author": "Rajab Mkomwa",
   "license": "LGPL-3.0",
   "bugs": {
-    "url": "https://github.com/rajey/typescript-library-starter/issues"
+    "url": "https://github.com/dhis2-club-tanzania/function-analytics/issues"
   },
-  "homepage": "https://github.com/rajey/typescript-library-starter#readme"
+  "homepage": "https://github.com/dhis2-club-tanzania/function-analytics#readme",
+  "dependencies": {
+    "@types/base-64": "^1.0.0",
+    "@types/node-fetch": "^2.5.11",
+    "base-64": "^1.0.0",
+    "lodash": "^4.17.15",
+    "node-fetch": "^2.6.1",
+    "progress-promise": "^0.0.6"
+  }
 }

@@ -7,6 +7,8 @@
   "scripts": {
     "start": "webpack-dev-server --env dev",
     "build": "webpack --env prod",
+    "publish": "npm run build && cd dist && npm publish --access public",
+    "link": "npm run build && cd dist && npm link",
     "test": "jest",
     "docs": "node_modules/.bin/jsdoc -c jsdoc.json"
   },
