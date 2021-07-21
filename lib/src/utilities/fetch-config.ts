@@ -28,7 +28,7 @@ export class FetchConfig {
 
   get headers() {
     const headers = {
-      "Content-Type": this.contentType,
+      Accept: this.contentType,
     };
     if (!this.authorization) {
       return headers;
@@ -48,6 +48,7 @@ export class FetchConfig {
   get fetchConfig(): any {
     return {
       method: this.method,
+      credentials: "include",
       headers: this.headers,
     };
   }
