@@ -3,8 +3,8 @@
     "allowUnknownTags": false
   },
   "source": {
-    "include": ["src/", "README.md"],
-    "includePattern": ".js$",
+    "include": ["lib/src/", "lib/README.md"],
+    "includePattern": ".ts$",
     "excludePattern": "(node_modules/|docs)"
   },
   "plugins": ["plugins/markdown"],
@@ -13,27 +13,10 @@
     "encoding": "utf8",
     "destination": "docs/",
     "recurse": true,
-    "verbose": true,
-    "tutorials": "tutorials"
+    "verbose": true
   },
   "templates": {
     "cleverLinks": false,
     "monospaceLinks": false
-  },
-  "docdash": {
-    "sort": true,
-    "search": true,
-    "typedefs": true,
-    "navLevel": 2,
-    "sectionOrder": [
-      "Namespaces",
-      "Tutorials",
-      "Classes",
-      "Modules",
-      "Externals",
-      "Events",
-      "Mixins",
-      "Interfaces"
-    ]
   }
 }

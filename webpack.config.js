@@ -1,69 +1,64 @@
-/* global __dirname, require, module*/
+const path = require("path");
+const UglifyJsPlugin = require("uglifyjs-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
+// const TypedocWebpackPlugin = require("typedoc-webpack-plugin");
+const { env } = require("yargs").argv;
+const package = require("./package.json");
 
-const path = require('path');
-const env = require('yargs').argv.env; // use --env with webpack 2
-const pkg = require('./package.json');
-const CopyPlugin = require('copy-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const isProduction = env === "prod";
+const libraryName = package.name;
 
-let libraryName = pkg.name;
-
-let outputFile, mode;
-
-if (env === 'build') {
-  mode = 'production';
-  outputFile = libraryName + '.min.js';
-} else {
-  mode = 'development';
-  outputFile = libraryName + '.js';
-}
-
-const config = {
-  mode,
-  entry: __dirname + '/src/index.js',
-  devtool: 'inline-source-map',
-  output: {
-    path: __dirname + '/lib',
-    filename: outputFile,
-    library: libraryName,
-    libraryTarget: 'umd',
-    umdNamedDefine: true,
-    globalObject: "typeof self !== 'undefined' ? self : this"
-  },
-  plugins: [
-    new CleanWebpackPlugin(),
-    new CopyPlugin([
-      { from: 'src/package.json', to: '' },
-      { from: '*.md', to: '', flatten: true },
-      { from: 'LICENSE', to: '' }
-    ])
-  ],
-  externals: {
-    lodash: {
-      commonjs: 'lodash',
-      commonjs2: 'lodash',
-      amd: 'lodash',
-      root: '_'
-    }
+module.exports = {
+  mode: isProduction ? "production" : "development",
+  entry: "./lib/src/index.ts",
+  devtool: "inline-source-map",
+  optimization: {
+    minimizer: [new UglifyJsPlugin()],
   },
   module: {
     rules: [
       {
-        test: /(\.jsx|\.js)$/,
-        loader: 'babel-loader',
-        exclude: /(node_modules|bower_components)/
+        test: /\.tsx?$/,
+        use: "ts-loader",
+        exclude: /node_modules/,
       },
-      {
-        test: /(\.jsx|\.js)$/,
-        loader: 'eslint-loader',
-        exclude: /node_modules/
-      }
-    ]
+    ],
   },
   resolve: {
-    modules: [path.resolve('./node_modules'), path.resolve('./src')],
-    extensions: ['.json', '.js']
-  }
+    extensions: [".tsx", ".ts", ".js"],
+  },
+  output: {
+    filename: "index.js",
+    library: libraryName,
+    path: path.resolve(__dirname, "dist"),
+    libraryTarget: "umd",
+    umdNamedDefine: true,
+    globalObject: "typeof self !== 'undefined' ? self : this",
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new CopyPlugin({
+      patterns: [
+        { from: "lib/package.json", to: "", force: true },
+        { from: "lib/*.md", to: "[name][ext]", force: true },
+        { from: "LICENSE", to: "", force: true },
+      ],
+    }),
+    // new TypedocWebpackPlugin(
+    //   {
+    //     name: "Typescript Library",
+    //     mode: "file",
+    //     out: "../docs",
+    //     theme: "default",
+    //     exclude: ["**/*.spec.ts"],
+    //     includeDeclarations: false,
+    //     ignoreCompilerErrors: true,
+    //     excludeExternals: true,
+    //     excludeNotExported: true,
+    //     excludePrivate: true,
+    //   },
+    //   "./lib"
+    // ),
+  ],
 };
-
-module.exports = config;
