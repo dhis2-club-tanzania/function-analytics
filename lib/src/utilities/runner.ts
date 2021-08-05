@@ -84,7 +84,6 @@ export class Runner {
       fetch(config.url, config.fetchConfig).then(
         async (results) => {
           this.cache[hashed].data = await results.json();
-          console.log(this.cache[hashed].data);
           resolve(
             fetcher.performPostProcess(
               JSON.parse(JSON.stringify(this.cache[hashed].data))
@@ -135,7 +134,6 @@ export class Runner {
             this._fetch(fetcher, resolve, reject);
           })
           .catch((err: any) => {
-            console.log(err);
             reject();
           });
       } else {
